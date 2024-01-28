@@ -1,1 +1,1 @@
-from .rp_neighbours import *
+from .knn_classifier import *

@@ -85,20 +85,20 @@ class RPTForest:
     def get_point(self, ix):
         """Returns stored point by index
 
-        :param ix: point index
+        :param ix: target point index
         :return: np.ndarray representing the point
         """
 
         return self.points[ix]
 
-    def load(self, points: list) -> None:
+    def load(self, points: np.ndarray) -> None:
         """Loads a list of points and builds the corresponding forest
 
-        :param points: list of points
+        :param points: numpy.ndarray of points
         """
 
         self.trees.clear()
-        self.points = np.array(points)
+        self.points = points
 
         ixs = list(range(len(self.points)))
 
@@ -110,7 +110,7 @@ class RPTForest:
 
         :param root: root of a random projection tree to search
         :param point: target point
-        :return: set of points located in the same region of space
+        :return: set of indexes of points located in the same region of space
         """
 
         while isinstance(root, SplittingNode):

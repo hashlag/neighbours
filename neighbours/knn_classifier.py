@@ -5,10 +5,11 @@ from .exceptions import *
 
 
 class KNNClassifier:
-    def __init__(self, features, trees_count, rpt_m):
+    def __init__(self, features, classes_count, trees_count, rpt_m):
         self.features = features
         self.forest = RPTForest(features, trees_count, rpt_m)
         self.classes = None
+        self.classes_count = classes_count
 
     def load(self, points, classes):
         if not isinstance(points, np.ndarray):
@@ -29,5 +30,12 @@ class KNNClassifier:
 
         self.forest.load(points)
 
-    def predict(self, point: np.ndarray):
-        pass
+    def predict(self, point: np.ndarray, distance, kernel, h):
+        nearest_point_indexes = self.forest.get_neighbours(point)
+
+        votes = np.zeros(self.classes_count)
+
+        for point_ix in nearest_point_indexes:
+            votes[self.classes[point_ix]] += kernel(distance(point, self.forest.get_point(point_ix)) / h)
+
+        return np.argmax(votes)

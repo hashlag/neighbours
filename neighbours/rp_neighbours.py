@@ -68,7 +68,7 @@ class RPTForest:
     """
 
     def __init__(self, features, trees_count, m):
-        """Creates new RPTForest
+        """Creates new random projection tree forest
 
         :param features: number of features in each sample
         :param trees_count: number of trees in the forest

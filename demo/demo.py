@@ -1,3 +1,7 @@
+import sys
+
+sys.path.append("../")
+
 import neighbours as ns
 
 import numpy as np

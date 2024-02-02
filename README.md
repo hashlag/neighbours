@@ -47,3 +47,41 @@ w · x + b ≤ 0 point x is located "to the left"
 
 Since nodes are organized into a tree, we can perform search by evaluating the expression and proceeding to the corresponding child node.
 
+### Usage
+
+Import the package, for example, as
+
+```python
+import neighbours as ns
+```
+
+Now you can use the classifier
+
+```python
+import numpy as np
+
+# KNNClassifier(features, classes_count, trees_count, maximum number of samples in one leaf of an RP tree)
+classifier = ns.KNNClassifier(2, 3, 10, 7)
+
+train = np.array([[2, 1], [10, 15], [1, 3] ...])
+class_labels = np.array([0, 1, 0 ...])
+
+# load samples into classifier and build an RP forest
+classifier.load(train, class_labels)
+
+# target object representation
+sample = np.array([1, 1])
+
+# specify distance metric, smoothing kernel, window width and obtain a prediction
+prediction = classifier.predict(sample, ns.distance.euclidean, ns.kernel.gaussian, 1)
+
+print(prediction)
+```
+
+### Dependencies
+
+The only third-party dependency is `numpy`.
+
+### License
+
+This project is licensed under [the MIT License](https://raw.githubusercontent.com/hashlag/neighbours/main/LICENSE)

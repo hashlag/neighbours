@@ -1,0 +1,25 @@
+[project]
+name = "neighbours"
+version = "0.0.1"
+
+authors = [
+  { name="hashlag", email="90853356+hashlag@users.noreply.github.com" },
+]
+
+description = "Weighted kNN classifier and Nadaraya-Watson regressor implementation based on random projection forest."
+readme = "README.md"
+
+requires-python = ">=3.8"
+
+dependencies = [
+  'numpy ~= 1.26.3',
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
+
+[project.urls]
+Homepage = "https://github.com/hashlag/neighbours"
+Issues = "https://github.com/hashlag/neighbours/issues"

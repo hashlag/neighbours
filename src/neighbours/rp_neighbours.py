@@ -48,7 +48,7 @@ class LeafNode:
     """
 
     def __init__(self, ixs):
-        """Creates new LeafNode with given set of point indexes
+        """Creates new LeafNode with a given set of point indexes
 
         :param ixs: list of point indexes
         """
@@ -56,8 +56,8 @@ class LeafNode:
         self.indexes = set(ixs)
 
 
-class RPTForest:
-    """Forest of random projection trees
+class RPForest:
+    """Random projection forest
 
     Attributes:
         features: number of features in each sample
@@ -68,7 +68,7 @@ class RPTForest:
     """
 
     def __init__(self, features, trees_count, m):
-        """Creates new random projection tree forest
+        """Creates new random projection forest
 
         :param features: number of features in each sample
         :param trees_count: number of trees in the forest

@@ -4,45 +4,48 @@ from .rp_neighbours import *
 from .exceptions import *
 
 
-class KNNRegressor:
-    """K-nearest neighbors regressor
+class KNNClassifier:
+    """K-nearest neighbors classifier
 
-    Nadaraya-Watson kNN regressor based on random projection forest.
+    Weighted kNN classifier based on random projection forest.
 
     Supports different (including custom) smoothing kernels and distance metrics.
 
     Attributes:
         features: number of features in each sample
         forest: an instance of RPTForest
-        targets: an array of target values corresponding to loaded train points
+        classes: an array of labels (integers from 0 to N) corresponding to loaded train points
+        classes_count: number of classes used
     """
 
-    def __init__(self, features, trees_count, rpt_m):
-        """Initializes new regressor
+    def __init__(self, features, classes_count, trees_count, rpt_m):
+        """Initializes new classifier
 
         :param features: number of features in each sample
+        :param classes_count: number of classes used
         :param trees_count: number of trees in the forest
         :param rpt_m: maximum number of samples in one leaf of an RP tree
         """
 
         self.features = features
-        self.forest = RPTForest(features, trees_count, rpt_m)
-        self.targets = None
+        self.forest = RPForest(features, trees_count, rpt_m)
+        self.classes = None
+        self.classes_count = classes_count
 
-    def load(self, points, targets):
+    def load(self, points, classes):
         """Loads train data, builds a corresponding forest
 
         :param points: np.ndarray of train samples
-        :param targets: an array of target values corresponding to loaded train points
+        :param classes: an array of labels (integers from 0 to N) corresponding to loaded train points
         """
 
         if not isinstance(points, np.ndarray):
             raise InvalidType("points should be represented as np.ndarray")
 
-        if not isinstance(targets, np.ndarray) and not isinstance(targets, list):
-            raise InvalidType("targets should be represented as np.ndarray or list")
+        if not isinstance(classes, np.ndarray) and not isinstance(classes, list):
+            raise InvalidType("classes should be represented as np.ndarray or list")
 
-        self.targets = targets
+        self.classes = classes
 
         if points.ndim != 2:
             raise InvalidDimensionError("points array should be two-dimensional")
@@ -55,25 +58,20 @@ class KNNRegressor:
         self.forest.load(points)
 
     def predict(self, point: np.ndarray, distance, kernel, h):
-        """Predict target value for given point
+        """Predict class of given sample
 
         :param point: target point as np.ndarray
-        :param distance: distance metric function (e.g., from neighbours.distance)
-        :param kernel: smoothing kernel function (e.g., from neighbours.kernel)
+        :param distance: distance metric function (from neighbours.distance)
+        :param kernel: smoothing kernel function (from neighbours.kernel)
         :param h: bandwidth
-        :return: predicted value or numpy.nan if unable to obtain a prediction
+        :return: predicted class
         """
 
         nearest_point_indexes = self.forest.get_neighbours(point)
 
-        # Nadaraya-Watson estimator
-
-        numerator = float(0)
-        denominator = float(0)
+        votes = np.zeros(self.classes_count)
 
         for point_ix in nearest_point_indexes:
-            weight = kernel(distance(point, self.forest.get_point(point_ix)) / h)
-            numerator += weight * self.targets[point_ix]
-            denominator += weight
+            votes[self.classes[point_ix]] += kernel(distance(point, self.forest.get_point(point_ix)) / h)
 
-        return np.nan if denominator == 0 else numerator / denominator
+        return np.argmax(votes)

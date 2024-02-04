@@ -1,6 +1,6 @@
-import matplotlib.pyplot as plt
 import neighbours as ns
 
+import matplotlib.pyplot as plt
 import numpy as np
 import random
 import math

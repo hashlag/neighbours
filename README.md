@@ -1,6 +1,6 @@
 # Neighbours
 
-Weighted kNN classifier implementation based on random projection forest.
+Weighted kNN classifier and Nadaraya-Watson kernel regressor implementation based on random projection forest.
 
 ### Classifier description
 
@@ -19,13 +19,22 @@ Built-in distance metrics:
 
 Custom distance metrics and smoothing kernels are supported.
 
+Demo: `demo/regressor_demo.py`
+
+### Regressor description
+
+Nadaraya-Watson kernel regressor is implemented.
+
+Demo: `demo/classifier_demo.py`
+
 ### Neighbors search algorithm
 
 Random projection forest is used to search for neighbours.
 
 RP trees are built by recursive binary splits of space by selected hyperplanes.
 
-On each step algorithm chooses two random objects from train set and calculates a hyperplane symmetrically separating these two objects in feature space.
+On each step algorithm chooses two random objects from the train set
+and calculates a hyperplane symmetrically separating these two objects in feature space.
 Such hyperplanes become splitting nodes of an RP tree.
 
 Each resulting subset is split again if it contains more than `m` (hyperparameter) objects. 
@@ -52,6 +61,7 @@ Since nodes are organized into a tree, we can perform search by evaluating the e
 Import the package, for example, as
 
 ```python
+
 import neighbours as ns
 ```
 
@@ -84,4 +94,4 @@ The only third-party dependency is `numpy`.
 
 ### License
 
-This project is licensed under [the MIT License](https://raw.githubusercontent.com/hashlag/neighbours/main/LICENSE)
+This project is licensed under [the MIT License](https://raw.githubusercontent.com/hashlag/neighbours/main/LICENSE).

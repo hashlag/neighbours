@@ -19,13 +19,13 @@ Built-in distance metrics:
 
 Custom distance metrics and smoothing kernels are supported.
 
-Demo: `demo/regressor_demo.py`
+Demo: `demo/classifier_demo.py`
 
 ### Regressor description
 
 Nadaraya-Watson kernel regressor is implemented.
 
-Demo: `demo/classifier_demo.py`
+Demo: `demo/regressor_demo.py`
 
 ### Neighbors search algorithm
 

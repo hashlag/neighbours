@@ -27,6 +27,8 @@ Nadaraya-Watson kernel regressor is implemented.
 
 Demo: `demo/regressor_demo.py`
 
+![regressor demo screenshot](https://raw.githubusercontent.com/hashlag/neighbours/main/demo/regressor_demo_output.png)
+
 ### Neighbors search algorithm
 
 Random projection forest is used to search for neighbours.

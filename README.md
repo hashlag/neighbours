@@ -58,6 +58,12 @@ w · x + b ≤ 0 point x is located "to the left"
 
 Since nodes are organized into a tree, we can perform search by evaluating the expression and proceeding to the corresponding child node.
 
+### Installation
+
+```shell
+pip install git+https://github.com/hashlag/neighbours.git
+```
+
 ### Usage
 
 Import the package, for example, as
